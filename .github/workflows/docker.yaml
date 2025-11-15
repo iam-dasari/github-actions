@@ -6,7 +6,7 @@ on:
   #Added secrets
 env: 
   CONTAINER_REGISTRY: docker.io
-  IMAGE_NAME: github-actions-nginx
+  IMAGE_NAME: github-actions-nginx:latest
 
 jobs:
   docker:
@@ -14,17 +14,17 @@ jobs:
 
     steps:
     - name: Docker build
-      run: echo docker build -t $CONTAINER_REGISTRY/${{ vars.DOCKER_USERNAME }}/$IMAGE_NAME:latest
+      run: echo docker build -t $CONTAINER_REGISTRY/${{ vars.DOCKER_USERNAME }}/$IMAGE_NAME
 
     - name: Docker Login
       run: docker login --username=${{ vars.DOCKER_USERNAME }} --password=${{ secrets.DOCKER_PASSWORD }}
 
     - name: Docker Publish
-      run: docker push $CONTAINER_REGISTRY/${{ vars.DOCKER_USERNAME }}/$IMAGE_NAME:latest
+      run: docker push $CONTAINER_REGISTRY/${{ vars.DOCKER_USERNAME }}/$IMAGE_NAME
 
   deploy:
     needs: docker
     runs-on: ubuntu-latest
     steps:
     - name: Docker run
-      run: docker run -d -p 2345:80 $CONTAINER_REGISTRY/${{ vars.DOCKER_USERNAME }}/$IMAGE_NAME:latest
+      run: docker run -d -p 2345:80 $CONTAINER_REGISTRY/${{ vars.DOCKER_USERNAME }}/$IMAGE_NAME
