@@ -13,6 +13,9 @@ permissions:
   id-token: write
   security-events: write
 
+#outputs:
+ # appVersion: ${{ steps.version.outputs.appVersion }}
+
 #env:
  # DOCKER_REGISTRY
   #DOCKER_USERNAME
@@ -53,6 +56,14 @@ jobs:
           docker login --username ${{ vars.DOCKER_USERNAME }} --password ${{ secrets.DOCKER_PASSWORD }}
           docker push ${{ vars.DOCKER_REGISTRY}}/${{ vars.DOCKER_USERNAME }}/javaapp:${{ steps.version.outputs.appVersion }}
         
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: deploy the docker image
+        run: docker run -d -p 4321:80 ${{ vars.DOCKER_REGISTRY }}/${{ vars.DOCKER_USERNAME }}/javaapp:${{ steps.version.outputs.appVersion }}
+
 
 
 
