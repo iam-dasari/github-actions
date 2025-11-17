@@ -7,8 +7,6 @@ on:
         type: boolean
         default: false
         description: "Trigger Deployment?"
-env:
-  VERSION: 'latest'
 
 permissions:
   contents: read
@@ -41,7 +39,7 @@ jobs:
           echo "Detected version: $VERSION"
       - name: print version
         run: |
-          echo "Version in some other step: $VERSION"
+          echo "Version in some other step:: ${{ steps.version.outputs.appVersion }}"
 
 
 
