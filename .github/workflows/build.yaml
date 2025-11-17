@@ -20,8 +20,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    #outputs:
-     # appVersion: ${{ steps.version.outputs.appVersion }}
+    outputs:
+      appVersion: ${{ steps.version.outputs.appVersion }}
     
     steps:
       - name: Checkout Code
@@ -36,12 +36,12 @@ jobs:
       - name: Read version from pom.xml
         id: version
         run: |
-          env.VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+          VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
           echo "appVersion=$VERSION" >> $GITHUB_OUTPUT
-          echo "Detected version: $env.VERSION"
+          echo "Detected version: $VERSION"
       - name: print version
         run: |
-          echo "Version in some other step: $env.VERSION"
+          echo "Version in some other step: $VERSION"
 
 
 
