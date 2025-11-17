@@ -64,6 +64,11 @@ jobs:
       - name: deploy the docker image
         run: docker run -d -p 4321:4321 ${{ vars.DOCKER_REGISTRY }}/${{ vars.DOCKER_USERNAME }}/javaapp:1.0.2
 
+      - name: Test endpoint inside GitHub Actions
+      run: |
+        sleep 10
+        curl -v http://localhost:4321/hello
+
 
 
 
