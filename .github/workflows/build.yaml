@@ -62,7 +62,7 @@ jobs:
 
     steps:
       - name: deploy the docker image
-        run: docker run -d -p 4321:80 ${{ vars.DOCKER_REGISTRY }}/${{ vars.DOCKER_USERNAME }}/javaapp:1.0.2
+        run: docker run -d -p 4321:4321 ${{ vars.DOCKER_REGISTRY }}/${{ vars.DOCKER_USERNAME }}/javaapp:1.0.2
 
 
 
