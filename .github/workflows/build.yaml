@@ -36,12 +36,12 @@ jobs:
       - name: Read version from pom.xml
         id: version
         run: |
-          VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+          env.VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
           echo "appVersion=$VERSION" >> $GITHUB_OUTPUT
-          echo "Detected version: $VERSION"
+          echo "Detected version: $env.VERSION"
       - name: print version
         run: |
-          echo "Version in some other step: $VERSION"
+          echo "Version in some other step: $env.VERSION"
 
 
 
