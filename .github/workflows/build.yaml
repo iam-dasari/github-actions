@@ -34,7 +34,8 @@ jobs:
       - name: Read version from pom.xml
         id: version
         run: |
-          VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+          FULL_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+          VERSION=$(echo $FULL_VERSION | cut -d'-' -f1)
           echo "appVersion=$VERSION" >> $GITHUB_OUTPUT
           echo "Detected version: $VERSION"
       - name: print version
