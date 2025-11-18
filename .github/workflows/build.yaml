@@ -71,6 +71,9 @@ jobs:
       - name: checkout the code
         uses: actions/checkout@v4
 
+      - name: Create KIND cluster
+        uses: helm/kind-action@v1
+
       #- name: Debug path
       #  run: |
       #    echo "PWD: $(pwd)"
