@@ -67,6 +67,9 @@ jobs:
        #   sleep 10
        #   curl -v http://localhost:4321/hello
 
+      - name: checkout the code
+        uses: actions/checkout@v4
+        
       - name: Debug path
         run: |
           echo "PWD: $(pwd)"
