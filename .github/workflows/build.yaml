@@ -90,7 +90,7 @@ jobs:
           #git add .
           #git commit -m "Updated"
           #git push origin main
-          helm install cicd helm/Chart.yaml
+          helm install cicd helm/.
 
 
 
