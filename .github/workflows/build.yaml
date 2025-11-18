@@ -67,6 +67,14 @@ jobs:
           sleep 10
           curl -v http://localhost:4321/hello
 
+      - name: Update tag value in values.yaml
+        run: |
+          sed -i "s/tag: 1.0.0/tag: ${{ needs.build.outputs.appVersion }}/g" values.yaml
+          #git add .
+          #git commit -m "Updated"
+          #git push origin main
+          helm install cicd .
+
 
 
 
