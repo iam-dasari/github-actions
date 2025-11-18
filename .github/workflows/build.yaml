@@ -70,12 +70,19 @@ jobs:
       - name: Debug path
         run: |
           echo "PWD: $(pwd)"
-          cd ..
           ls -la
-          
-      - name: Update tag value in values.yaml
+      
+      - name: Find helm folder
         run: |
-          sed -i "s/tag: 1.0.0/tag: ${{ needs.build.outputs.appVersion }}/g" "helm/values.yaml"
+          echo "CURRENT PWD:"
+          pwd
+
+          echo "SEARCHING FOR HELM FOLDER:"
+          find /home/runner/work -type d -name helm 2>/dev/null || true
+          
+      #- name: Update tag value in values.yaml
+       # run: |
+        #  sed -i "s/tag: 1.0.0/tag: ${{ needs.build.outputs.appVersion }}/g" "helm/values.yaml"
           #git add .
           #git commit -m "Updated"
           #git push origin main
