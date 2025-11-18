@@ -50,11 +50,12 @@ jobs:
         run: |
           echo "Version in some other step:: ${{ steps.version.outputs.appVersion }}"
 
-      - name: Docker Build, Login and Push to Docker Hub
+      - name: Docker Build, Login and Push to Docker Hub, Update values.yaml file
         run: |
           docker build -t ${{ vars.DOCKER_REGISTRY }}/${{ vars.DOCKER_USERNAME }}/javaapp:${{ steps.version.outputs.appVersion }} .
           docker login --username ${{ vars.DOCKER_USERNAME }} --password ${{ secrets.DOCKER_PASSWORD }}
           docker push ${{ vars.DOCKER_REGISTRY}}/${{ vars.DOCKER_USERNAME }}/javaapp:${{ steps.version.outputs.appVersion }}
+          sed -i "s/tag: 1.0.0/tag: ${{ needs.build.outputs.appVersion }}/g" "helm/values.yaml"
         
   deploy:
     needs: build
@@ -70,27 +71,23 @@ jobs:
       - name: checkout the code
         uses: actions/checkout@v4
 
-      - name: Debug path
-        run: |
-          echo "PWD: $(pwd)"
-          ls -la
+      #- name: Debug path
+      #  run: |
+      #    echo "PWD: $(pwd)"
+       #   ls -la
       
-      - name: Find helm folder
-        run: |
-          echo "CURRENT PWD:"
-          pwd
+      #- name: Find helm folder
+      #  run: |
+      #    echo "CURRENT PWD:"
+      #    pwd
 
-          echo "SEARCHING FOR HELM FOLDER:"
-          find /home/runner/work -type d -name helm 2>/dev/null || true
-          ls -R .
+       #   echo "SEARCHING FOR HELM FOLDER:"
+       #   find /home/runner/work -type d -name helm 2>/dev/null || true
+        #  ls -R .
 
-      - name: Update tag value in values.yaml
+      - name: deploy using ArgoCD
         run: |
-          sed -i "s/tag: 1.0.0/tag: ${{ needs.build.outputs.appVersion }}/g" "helm/values.yaml"
-          #git add .
-          #git commit -m "Updated"
-          #git push origin main
-          helm install cicd helm/.
+         kubectl apply -f application.yaml
 
 
 
