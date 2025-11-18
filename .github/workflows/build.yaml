@@ -79,7 +79,8 @@ jobs:
 
           echo "SEARCHING FOR HELM FOLDER:"
           find /home/runner/work -type d -name helm 2>/dev/null || true
-          
+          ls -R .
+
       #- name: Update tag value in values.yaml
        # run: |
         #  sed -i "s/tag: 1.0.0/tag: ${{ needs.build.outputs.appVersion }}/g" "helm/values.yaml"
