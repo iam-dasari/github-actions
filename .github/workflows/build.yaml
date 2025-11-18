@@ -73,9 +73,9 @@ jobs:
           cd ..
           ls -la
           
-      #- name: Update tag value in values.yaml
-       # run: |
-        #  sed -i "s/tag: 1.0.0/tag: ${{ needs.build.outputs.appVersion }}/g" "helm/values.yaml"
+      - name: Update tag value in values.yaml
+        run: |
+          sed -i "s/tag: 1.0.0/tag: ${{ needs.build.outputs.appVersion }}/g" "helm/values.yaml"
           #git add .
           #git commit -m "Updated"
           #git push origin main
